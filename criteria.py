@@ -7,5 +7,7 @@ class Criteria:
         print(self.__annualIR)
         pass
     
-    def loanToIncome(self):
+    def loanToIncome(self, dataClient):
+        self.__loanToIncome = float(dataClient["Requested loan amount"]) / float(dataClient["Income"])
+        print(self.__loanToIncome)
         pass
