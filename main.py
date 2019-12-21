@@ -1,6 +1,4 @@
 import criteria
-import sys
-# import sciter
 
 class Main:
     client =  {
@@ -65,6 +63,7 @@ class Main:
 
 st = Main()
 st.main()
+
 cr = criteria.Criteria()
 cr.annualInterestPayment(st.client)
 cr.loanToIncome(st.testClient)

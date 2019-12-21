@@ -1,9 +1,9 @@
 class Criteria:
-    __annualIR = ""
+    __annualIP = ""
     __loanToIncome = ""
 
     def annualInterestPayment(self, dataClient):
-        self.__annualIR = float(dataClient["Requested loan amount"]) * (float(dataClient["Interest rate"]) / 100)
+        self.__annualIP = float(dataClient["Requested loan amount"]) * (float(dataClient["Interest rate"]) / 100)
         pass
     
     def loanToIncome(self, dataClient):
@@ -11,7 +11,7 @@ class Criteria:
         pass
 
     def isValidLoan(self, dataClient):
-        if (self.__annualIR > (20 / 100) * float(dataClient["Income"])):
+        if (self.__annualIP > (20 / 100) * float(dataClient["Income"])):
             return False
         elif (self.__loanToIncome > 4):
             return False
