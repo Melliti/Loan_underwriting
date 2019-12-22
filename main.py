@@ -1,4 +1,7 @@
 import criteria
+import gui_loan
+from PyQt5.QtWidgets import QApplication
+import sys
 
 class Main:
     client =  {
@@ -62,12 +65,17 @@ class Main:
             exit()
 
 st = Main()
-st.main()
+# st.main()
 
 cr = criteria.Criteria()
-cr.annualInterestPayment(st.client)
-cr.loanToIncome(st.testClient)
-if cr.isValidLoan(st.client):
-    print ("Refused")
-else:
-    print ("Accepted")
+App = QApplication(sys.argv)
+gui = gui_loan.GUI_Loan(st.client)
+gui.show()
+sys.exit(App.exec())
+
+# cr.annualInterestPayment(st.client)
+# cr.loanToIncome(st.testClient)
+# if (cr.isValidLoan(st.client)):
+    # print ("Refused")
+# else:
+    # print ("Accepted")

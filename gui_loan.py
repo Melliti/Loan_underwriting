@@ -1,27 +1,40 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QApplication, QInputDialog, QLabel, QLineEdit, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QDialogButtonBox, QVBoxLayout, QGroupBox, QFormLayout, QLabel, QLineEdit, QComboBox, QSpinBox, QDialog
 import sys
 
 
-class GUI_Loan(QWidget):
-    def __init__(self):
-        super().__init__()
+class GUI_Loan(QDialog):
+    NumGridRows = 3
+    NumButtons = 4
 
-        self.text_name = QLineEdit(self)
-        self.text_name.move(5, 5)
-        self.text_name.setPlaceholderText("Enter your first name")
+    def __init__(self, fields):
+        super(GUI_Loan, self).__init__()
+        print(fields)
+        self.createFormGroupBox(fields)
+        buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttonBox.accepted.connect(self.accept)
+        buttonBox.rejected.connect(self.reject)
 
-        self.btn = QPushButton('submit', self)
-        self.btn.move(5, 45)
-        self.btn.clicked.connect(self.showDialog)
+        mainLayout = QVBoxLayout()
+        mainLayout.addWidget(self.formGroupBox)
+        mainLayout.addWidget(buttonBox)
+        self.setLayout(mainLayout)
+        self.setWindowTitle("Form Loan")
 
 
-    def showDialog(self):
-        text, result = QInputDialog.getText(self, "Input dialog", 'Enter your name')
-        if result == True:
-            self.text_name.setText(str(text ))
 
-App = QApplication(sys.argv)
-gui = GUI_Loan()
-gui.show()
-sys.exit(App.exec())
+    def createFormGroupBox(self, fields):
+        self.formGroupBox = QGroupBox("Enter client information")
+        layout = QFormLayout()
+        for key in fields:
+            if (key == "First name" or key == "Last name"):
+                layout.addRow(QLabel(key + ":"), QLineEdit())
+            else:
+                layout.addRow(QLabel(key + ":"), QSpinBox())
+        self.formGroupBox.setLayout(layout)
+        pass
+
+# App = QApplication(sys.argv)
+# gui = GUI_Loan()
+# gui.show()
+# sys.exit(App.exec())
