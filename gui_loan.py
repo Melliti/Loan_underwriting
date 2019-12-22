@@ -9,10 +9,11 @@ class GUI_Loan(QDialog):
 
     def __init__(self, fields):
         super(GUI_Loan, self).__init__()
+        self.fields = fields
         print(fields)
-        self.createFormGroupBox(fields)
+        self.createFormGroupBox()
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
-        buttonBox.accepted.connect(self.accept)
+        buttonBox.accepted.connect(self.printResults)
         buttonBox.rejected.connect(self.reject)
 
         mainLayout = QVBoxLayout()
@@ -21,18 +22,40 @@ class GUI_Loan(QDialog):
         self.setLayout(mainLayout)
         self.setWindowTitle("Form Loan")
 
+    def printResults(self):
+        for fields in self.fields:
+            if (fields == "First name" or fields == "Last name"):
+                print(self.fields[fields].displayText())
+            else:
+                print(self.fields[fields].value())
+            
 
 
-    def createFormGroupBox(self, fields):
+    def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Enter client information")
         layout = QFormLayout()
-        for key in fields:
+        for key in self.fields:
             if (key == "First name" or key == "Last name"):
-                layout.addRow(QLabel(key + ":"), QLineEdit())
+                self.fields[key] = QLineEdit()
+                layout.addRow(QLabel(key + ":"), self.fields[key])
             else:
-                layout.addRow(QLabel(key + ":"), QSpinBox())
+                self.fields[key] = QSpinBox()
+                if key == "Social security number":
+                    self.fields[key].setMinimum(100000000)
+                    self.fields[key].setMaximum(999999999)
+                if key == "Credit score":
+                    self.fields[key].setMaximum(850)
+                    self.fields[key].setMinimum(300)
+                if key == "Requested loan amount":
+                    self.fields[key].setMaximum(2000000)
+                    self.fields[key].setMinimum(5000)
+                if key == "Income":
+                    self.fields[key].setMaximum(2000000)
+                    self.fields[key].setMinimum(20000)
+                if key == "Loan duration":
+                    self.fields[key].setMaximum(200)
+                layout.addRow(QLabel(key + ":"), self.fields[key])
         self.formGroupBox.setLayout(layout)
-        pass
 
 # App = QApplication(sys.argv)
 # gui = GUI_Loan()

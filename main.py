@@ -71,6 +71,8 @@ cr = criteria.Criteria()
 App = QApplication(sys.argv)
 gui = gui_loan.GUI_Loan(st.client)
 gui.show()
+print("dd")
+print(st.client)
 sys.exit(App.exec())
 
 # cr.annualInterestPayment(st.client)
