@@ -1,5 +1,5 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QApplication, QWidget, QDialogButtonBox, QVBoxLayout, QGroupBox, QFormLayout, QLabel, QLineEdit, QComboBox, QSpinBox, QDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QDialogButtonBox, QVBoxLayout, QGroupBox, QFormLayout, QLabel, QLineEdit, QComboBox, QSpinBox, QDialog, QMessageBox
 import sys
 import criteria
 
@@ -11,7 +11,6 @@ class GUI_Loan(QDialog):
     def __init__(self, fields):
         super(GUI_Loan, self).__init__()
         self.fields = fields
-        print(fields)
         self.createFormGroupBox()
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         buttonBox.accepted.connect(self.printResults)
@@ -28,9 +27,9 @@ class GUI_Loan(QDialog):
         cr.annualInterestPayment(self.fields)
         cr.loanToIncome(self.fields)
         if (cr.isValidLoan(self.fields)):
-            print ("Accepted")
+            QMessageBox.information(self, "Accepted", self.fields["Last name"].displayText() + " can get the loan")
         else:
-            print ("Refused")
+            QMessageBox.critical(self, "Refused", self.fields["Last name"].displayText() + " can not get the loan")
             
 
 
@@ -59,8 +58,3 @@ class GUI_Loan(QDialog):
                     self.fields[key].setMaximum(200)
                 layout.addRow(QLabel(key + ":"), self.fields[key])
         self.formGroupBox.setLayout(layout)
-
-# App = QApplication(sys.argv)
-# gui = GUI_Loan()
-# gui.show()
-# sys.exit(App.exec())
