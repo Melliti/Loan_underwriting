@@ -67,17 +67,10 @@ class Main:
 st = Main()
 # st.main()
 
-cr = criteria.Criteria()
 App = QApplication(sys.argv)
 gui = gui_loan.GUI_Loan(st.client)
 gui.show()
 print("dd")
-print(st.client)
-sys.exit(App.exec())
+# print(st.client)
 
-# cr.annualInterestPayment(st.client)
-# cr.loanToIncome(st.testClient)
-# if (cr.isValidLoan(st.client)):
-    # print ("Refused")
-# else:
-    # print ("Accepted")
+sys.exit(App.exec())

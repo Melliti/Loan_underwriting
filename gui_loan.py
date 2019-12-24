@@ -1,6 +1,7 @@
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QApplication, QWidget, QDialogButtonBox, QVBoxLayout, QGroupBox, QFormLayout, QLabel, QLineEdit, QComboBox, QSpinBox, QDialog
 import sys
+import criteria
 
 
 class GUI_Loan(QDialog):
@@ -28,6 +29,13 @@ class GUI_Loan(QDialog):
                 print(self.fields[fields].displayText())
             else:
                 print(self.fields[fields].value())
+        cr = criteria.Criteria()
+        cr.annualInterestPayment(self.fields)
+        cr.loanToIncome(self.fields)
+        if (cr.isValidLoan(self.fields)):
+            print ("Refused")
+        else:
+            print ("Accepted")
             
 
 
