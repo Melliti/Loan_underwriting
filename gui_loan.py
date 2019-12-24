@@ -24,18 +24,19 @@ class GUI_Loan(QDialog):
         self.setWindowTitle("Form Loan")
 
     def printResults(self):
-        for fields in self.fields:
-            if (fields == "First name" or fields == "Last name"):
-                print(self.fields[fields].displayText())
-            else:
-                print(self.fields[fields].value())
+        # for fields in self.fields:
+        #     if (fields == "First name" or fields == "Last name"):
+        #         print(self.fields[fields].displayText())
+        #     else:
+        #         print(self.fields[fields].value())
         cr = criteria.Criteria()
         cr.annualInterestPayment(self.fields)
         cr.loanToIncome(self.fields)
+        # print(cr.isValidLoan(self.fields))
         if (cr.isValidLoan(self.fields)):
-            print ("Refused")
-        else:
             print ("Accepted")
+        else:
+            print ("Refused")
             
 
 
