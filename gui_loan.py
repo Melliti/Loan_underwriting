@@ -42,12 +42,23 @@ class GUI_Loan(QDialog):
             
     def fileReader(self):
         filename = QFileDialog.getOpenFileName(self, 'Open File', '.', "CSV file (*.csv)")
+        cr = criteria.Criteria()
 
         with open(filename[0], 'r') as csvFile:
             data = csv.reader(csvFile, delimiter=",")
+            fields = []
+            it = 0
             for row in data:
-                print(self.fields)
+                if (it == 0):
+                    while (it != len(row)):
+                        fields.append(row[it].strip())
+                        it += 1
+                else:
+                    cr.annualInterestPayment(row[3], row[5])
+                    cr.loanToIncome(row[3], row[6])
+                    print(cr.isValidLoan(row[6], row[7]))
                 print(row)
+            print(fields)
          
 
     def createFormGroupBox(self):
