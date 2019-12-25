@@ -1,6 +1,7 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QApplication, QWidget, QDialogButtonBox, QVBoxLayout, QGroupBox, QFormLayout, QLabel, QLineEdit, QComboBox, QSpinBox, QDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QFormLayout, QGroupBox, QLabel, QLineEdit, QMessageBox, QMessageBox, QPushButton, QSpinBox, QVBoxLayout, QWidget
 import sys
+import csv
 import criteria
 
 
@@ -12,12 +13,20 @@ class GUI_Loan(QDialog):
         super(GUI_Loan, self).__init__()
         self.fields = fields
         self.createFormGroupBox()
+
+        # Open File button
+        openBtn = QPushButton("Import CSV")
+        openBtn.clicked.connect(self.fileReader)
+
+        # Submit button
         buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         buttonBox.accepted.connect(self.printResults)
         buttonBox.rejected.connect(self.reject)
 
         mainLayout = QVBoxLayout()
+        # Form
         mainLayout.addWidget(self.formGroupBox)
+        mainLayout.addWidget(openBtn)
         mainLayout.addWidget(buttonBox)
         self.setLayout(mainLayout)
         self.setWindowTitle("Form Loan")
@@ -31,10 +40,18 @@ class GUI_Loan(QDialog):
         else:
             QMessageBox.critical(self, "Refused", self.fields["Last name"].displayText() + " can not get the loan")
             
+    def fileReader(self):
+        filename = QFileDialog.getOpenFileName(self, 'Open File', '.', "CSV file (*.csv)")
 
+        with open(filename[0], 'r') as csvFile:
+            data = csv.reader(csvFile, delimiter=",")
+            for row in data:
+                print(self.fields)
+                print(row)
+         
 
     def createFormGroupBox(self):
-        self.formGroupBox = QGroupBox("Enter client information")
+        self.formGroupBox = QGroupBox("Enter client informations")
         layout = QFormLayout()
         for key in self.fields:
             if (key == "First name" or key == "Last name"):
