@@ -39,6 +39,12 @@ class GUI_Loan(QDialog):
             QMessageBox.information(self, "Accepted", self.fields["Last name"].displayText() + " can get the loan")
         else:
             QMessageBox.critical(self, "Refused", self.fields["Last name"].displayText() + " can not get the loan")
+
+    def printResults(self, fields, result):
+        if (result):
+            QMessageBox.information(self, "Accepted", fields[0].strip() + " " + fields[1].strip() + " can get the loan")
+        else:
+            QMessageBox.critical(self, "Refused", fields[0].strip() + " " + fields[1].strip() + " can not get the loan")
             
     def fileReader(self):
         filename = QFileDialog.getOpenFileName(self, 'Open File', '.', "CSV file (*.csv)")
@@ -49,16 +55,11 @@ class GUI_Loan(QDialog):
             fields = []
             it = 0
             for row in data:
-                if (it == 0):
-                    while (it != len(row)):
-                        fields.append(row[it].strip())
-                        it += 1
-                else:
+                if (it != 0):
                     cr.annualInterestPayment(row[3], row[5])
                     cr.loanToIncome(row[3], row[6])
-                    print(cr.isValidLoan(row[6], row[7]))
-                print(row)
-            print(fields)
+                    self.printResults(row, cr.isValidLoan(row[6], row[7]))
+                it += 1
          
 
     def createFormGroupBox(self):
