@@ -40,7 +40,7 @@ class GUI_Loan(QDialog):
         else:
             QMessageBox.critical(self, "Refused", self.fields["Last name"].displayText() + " can not get the loan")
 
-    def printResults(self, fields, result):
+    def printResultsCSV(self, fields, result):
         if (result):
             QMessageBox.information(self, "Accepted", fields[0].strip() + " " + fields[1].strip() + " can get the loan")
         else:
@@ -56,9 +56,9 @@ class GUI_Loan(QDialog):
             it = 0
             for row in data:
                 if (it != 0):
-                    cr.annualInterestPayment(row[3], row[5])
-                    cr.loanToIncome(row[3], row[6])
-                    self.printResults(row, cr.isValidLoan(row[6], row[7]))
+                    cr.annualInterestPayment(None, row[3], row[5])
+                    cr.loanToIncome(None, row[3], row[6])
+                    self.printResultsCSV(row, cr.isValidLoan(row[6], row[7]))
                 it += 1
          
 
