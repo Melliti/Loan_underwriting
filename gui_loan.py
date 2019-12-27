@@ -4,7 +4,6 @@ import sys
 import csv
 import criteria
 
-
 class GUI_Loan(QDialog):
     NumGridRows = 3
     NumButtons = 4
@@ -41,10 +40,14 @@ class GUI_Loan(QDialog):
             QMessageBox.critical(self, "Refused", self.fields["Last name"].displayText() + " can not get the loan")
 
     def printResultsCSV(self, fields, result):
+        file = open("loan.csv", "a")
         if (result):
             QMessageBox.information(self, "Accepted", fields[0].strip() + " " + fields[1].strip() + " can get the loan")
+            file.write(fields[0].strip() + " " + fields[1].strip() + ",accepted\n")
         else:
             QMessageBox.critical(self, "Refused", fields[0].strip() + " " + fields[1].strip() + " can not get the loan")
+            file.write(fields[0].strip() + " " + fields[1].strip() + ",refused\n")
+        file.close()
             
     def fileReader(self):
         filename = QFileDialog.getOpenFileName(self, 'Open File', '.', "CSV file (*.csv)")
@@ -60,7 +63,6 @@ class GUI_Loan(QDialog):
                     cr.loanToIncome(None, row[3], row[6])
                     self.printResultsCSV(row, cr.isValidLoan(row[6], row[7]))
                 it += 1
-         
 
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Enter client informations")
