@@ -61,7 +61,7 @@ class GUI_Loan(QDialog):
                 if (it != 0):
                     cr.annualInterestPayment(None, row[3], row[5])
                     cr.loanToIncome(None, row[3], row[6])
-                    self.printResultsCSV(row, cr.isValidLoan(row[6], row[7]))
+                    self.printResultsCSV(row, cr.isValidLoan(None, row[6], row[7]))
                 it += 1
 
     def createFormGroupBox(self):

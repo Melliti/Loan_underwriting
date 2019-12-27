@@ -18,6 +18,13 @@ class Criteria:
 
     def isValidLoan(self, dataClient, income = 0, cs = 0):
         if (income != 0):
+            # print("AIP")
+            # print(self.__annualIP)
+            # print((20 / 100) * float(income))
+            # print("LTI")
+            # print(self.__loanToIncome)
+            # print("CS")
+            # print(cs)
             if (self.__annualIP > (20 / 100) * float(income)):
                 return False
             elif (self.__loanToIncome > 4):
